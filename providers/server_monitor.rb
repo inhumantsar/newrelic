@@ -35,6 +35,12 @@ def install_newrelic_service_linux
   package new_resource.service_name do
     action new_resource.action
   end
+  directory File.basename(new_resource.logfile) do
+    owner new_resource.config_file_user
+    group new_resource.config_file_group
+    recursive true
+    action :create
+  end
   # configure your New Relic license key
   template "#{new_resource.config_path}/nrsysmond.cfg" do
     cookbook new_resource.cookbook
