@@ -12,7 +12,7 @@ describe 'newrelic_lwrp_test::server_monitor' do
       end.converge(described_recipe)
     end
 
-    it 'Installs New Relic PHP agent' do
+    it 'Installs New Relic Server Monitor agent' do
       expect(chef_run).to install_newrelic_server_monitor('Install')
     end
 
@@ -22,6 +22,10 @@ describe 'newrelic_lwrp_test::server_monitor' do
 
     it 'installs nrsysmond' do
       expect(chef_run).to install_package('newrelic-sysmond')
+    end
+
+    it 'installs nrsysmond' do
+      expect(chef_run).to create_directory('/var/log/newrelic').with(user: 'newrelic', group: 'newrelic')
     end
 
     it 'creates newrelic config template from nrsysmond.cfg.erb' do
